@@ -25,7 +25,7 @@ export class CadColaboradorDB {
     conn: Connection,
   ): Promise<ReturnDefault> {
 
-    const sql = `INSERT INTO sesmt_colaboradores (matricula, nome_funcio, desc_situacao)
+    const sql = `INSERT INTO colaboradores (matricula, nome_funcio, desc_situacao)
                  VALUES (?,?,?)`;
     const values = [
       obj.matricula,
@@ -54,7 +54,7 @@ export class CadColaboradorDB {
     const sql = `SELECT col.matricula,
                         col.nome_funcio,
                         col.desc_situacao
-                        FROM ${process.env.VIEW_SENIOR}.cdc_info_colaboradores_view col
+                        FROM ${process.env.VIEW_SENIOR}.api_colaboradores_view col
                         WHERE situacao != 7
                         ORDER BY matricula asc`;
         const result = await conn.execute<iColaborador>(sql, [], {
@@ -77,7 +77,7 @@ export class CadColaboradorDB {
     matricula: number,
     conn: Connection,
   ): Promise<number> {
-    const sql = `SELECT matricula FROM sesmt_colaboradores
+    const sql = `SELECT matricula FROM colaboradores
                  WHERE matricula = ? ORDER BY matricula desc`;
      try {
       const [rows] = await conn.query<RowDataPacket[]>(sql, [matricula]);
